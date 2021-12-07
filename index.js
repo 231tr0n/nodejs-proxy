@@ -4,7 +4,7 @@ const url = require('url');
 
 const temp_port = 8080;
 
-const proxy_server = http.createServer(function(client_request, client_response) {
+const proxy_server = http.createServer((client_request, client_response) => {
 	const client_http_url = url.parse(client_request.url, true);
 	if (client_http_url.hostname && client_request.method) {
 		let check = false;
@@ -24,8 +24,8 @@ const proxy_server = http.createServer(function(client_request, client_response)
 			method : client_request.method,
 			headers : client_request.headers
 		}
-		var server_request = http.request(options, function(server_response) {
-			server_response.on('error', function(error) {
+		var server_request = http.request(options, (server_response) => {
+			server_response.on('error', (error) => {
 				console.log('       ', 'ERROR  ', '|' + 'http server response error!', server_response.remoteAddress, ':', server_response.remotePort);
 				check = true;
 				return;
@@ -35,7 +35,7 @@ const proxy_server = http.createServer(function(client_request, client_response)
 				end : true
 			});
 		});
-		server_request.on('error', function(error) {
+		server_request.on('error', (error) => {
 			console.log('        ERROR   |http server request error!', server_request.remoteAddress, ':', server_request.remotePort);
 			check = true;
 			return;
@@ -54,7 +54,7 @@ const proxy_server = http.createServer(function(client_request, client_response)
 	}
 });
 
-const proxy_server_listener = proxy_server.listen(temp_port, function(error) {
+const proxy_server_listener = proxy_server.listen(temp_port, (error) => {
 	if (error) {
 		console.log('        ERROR   |proxy server listener error!');
 		return;
@@ -67,11 +67,11 @@ const proxy_server_listener = proxy_server.listen(temp_port, function(error) {
 	}
 });
 
-proxy_server.on('connect', function(request, client_socket, head) {
+proxy_server.on('connect', (request, client_socket, head) => {
 	const { port, hostname } = url.parse(`//${request.url}`, false, true);
 	if (hostname && port) {
 		const server_socket = net.connect(port, hostname);
-		client_socket.on('error', function(error) {
+		client_socket.on('error', (error) => {
 			console.log('        ERROR   |client socket error!', client_socket.remoteAddress, ':', client_socket.remotePort);
 			if (server_socket) {
 				console.log('        CLOSED  |server socket!', server_socket.remoteAddress, ':', server_socket.remotePort);
@@ -79,7 +79,7 @@ proxy_server.on('connect', function(request, client_socket, head) {
 				return;
 			}
 		});
-		client_socket.on('end', function() {
+		client_socket.on('end', () => {
 			console.log('        CLOSED  |client socket!', client_socket.remoteAddress, ':', client_socket.remotePort);
 			if (server_socket) {
 				console.log("        CLOSED  |server socket!", server_socket.remoteAddress, ':', server_socket.remotePort);
@@ -87,7 +87,7 @@ proxy_server.on('connect', function(request, client_socket, head) {
 				return;
 			}
 		});
-		server_socket.on('error', function(error) {
+		server_socket.on('error', (error) => {
 			console.log('        ERROR   |server socket error!', server_socket.remoteAddress, ':', server_socket.remotePort);
 			if (client_socket) {
 				console.log('        CLOSED  |client socket!', client_socket.remoteAddress, ':', client_socket.remotePort);
@@ -96,7 +96,7 @@ proxy_server.on('connect', function(request, client_socket, head) {
 				return;
 			}
 		});
-		server_socket.on('end', function() {
+		server_socket.on('end', () => {
 			console.log('        CLOSED  |server socket!', server_socket.remoteAddress, ':', server_socket.remotePort);
 			if (client_socket) {
 				console.log("        CLOSED  |client socket!", client_socket.remoteAddress, ':', client_socket.remotePort);
@@ -105,7 +105,7 @@ proxy_server.on('connect', function(request, client_socket, head) {
 				return;
 			}
 		});
-		server_socket.on('connect', function() {
+		server_socket.on('connect', () => {
 			if (request.method == "GET") {
 				console.log('ALLOWED', request.method, '   ', '|' + hostname);
 			} else if (request.method == "POST") {
