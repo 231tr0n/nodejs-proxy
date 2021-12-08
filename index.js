@@ -53,6 +53,9 @@ let proxy_setup = (temp_port, client) => {
 					}
 					var server_request = http.request(options, (server_response) => {
 						client_response.writeHead(server_response.statusCode, server_response.headers);
+						server_response.on('error', (error) => {
+							console.log('        ERROR   |http server response error!', server_request.remoteAddress, ':', server_request.remotePort);
+						});
 						server_response.pipe(client_response, {
 							end : true
 						});
@@ -65,6 +68,9 @@ let proxy_setup = (temp_port, client) => {
 					});
 					client_request.on('error', (error) => {
 						console.log('        ERROR   |http client request error!', client_request.remoteAddress, ':', client_request.remotePort);
+					});
+					client_response.on('error', (error) => {
+						console.log('        ERROR   |http client response error!', client_request.remoteAddress, ':', client_request.remotePort);
 					});
 				}
 			});
