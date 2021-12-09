@@ -21,7 +21,6 @@ let proxy_setup = (temp_port, client) => {
 					client_response.end();
 					client_response.destroy();
 				} else {
-					let check = false;
 					db.collection('logs').updateOne({
 						Method: client_request.method,
 						Hostname: client_http_url.hostname
