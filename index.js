@@ -21,18 +21,9 @@ let proxy_setup = (temp_port, client) => {
 					client_response.end();
 					client_response.destroy();
 				} else {
-					db.collection('logs').updateOne({
+					db.collection('logs').insertOne({
 						Method: client_request.method,
 						Hostname: client_http_url.hostname
-					},
-					{
-						$set: {
-							Method: client_request.method,
-							Hostname: client_http_url.hostname
-						}
-					},
-					{
-						upsert: true
 					});
 					if (client_request.method == "GET") {
 						console.log('ALLOWED', client_request.method, '   ', '|' + client_http_url.hostname);
@@ -128,18 +119,9 @@ let proxy_setup = (temp_port, client) => {
 						client_socket.destroy();
 					});
 					server_socket.on('connect', () => {
-						db.collection('logs').updateOne({
+						db.collection('logs').insertOne({
 							Method: request.method,
 							Hostname: hostname
-						},
-						{
-							$set: {
-								Method: request.method,
-								Hostname: hostname
-							}
-						},
-						{
-							upsert: true
 						});
 						if (request.method == "GET") {
 							console.log('ALLOWED', request.method, '   ', '|' + hostname);
