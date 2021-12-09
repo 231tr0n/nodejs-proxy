@@ -3,6 +3,7 @@ let proxy_setup = (temp_port, client) => {
 	const net = require('net');
 	const url = require('url');
 	const db = client.db('proxy_server');
+	db.collection('logs').deleteMany({});
 	const proxy_server = http.createServer((client_request, client_response) => {
 		const client_http_url = url.parse(client_request.url, true);
 		if (client_http_url.hostname && client_request.method) {
