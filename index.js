@@ -9,6 +9,11 @@ let proxy_setup = (temp_port, client) => {
 		if (client_http_url.hostname && client_request.method) {
 			db.collection('blocked_websites').find({Hostname: client_request.hostname}).toArray((error, results) => {
 				if (results.length > 0) {
+					db.collection('logs').insertOne({
+						Status: "BLOCKED",
+						Method: client_request.method,
+						Hostname: client_http_url.hostname
+					});
 					if (client_request.method == "GET") {
 						console.log('BLOCKED', client_request.method, '   ', '|' + client_http_url.hostname);
 					} else if (client_request.method == "POST") {
@@ -23,6 +28,7 @@ let proxy_setup = (temp_port, client) => {
 					client_response.destroy();
 				} else {
 					db.collection('logs').insertOne({
+						Status: "ALLOWED",
 						Method: client_request.method,
 						Hostname: client_http_url.hostname
 					});
@@ -86,6 +92,11 @@ let proxy_setup = (temp_port, client) => {
 		if (hostname && port) {
 			db.collection('blocked_websites').find({Hostname: hostname}).toArray((error, results) => {
 				if (results.length > 0) {
+					db.collection('logs').insertOne({
+						Status: "BLOCKED",
+						Method: request.method,
+						Hostname: hostname
+					});
 					if (request.method == "GET") {
 						console.log('BLOCKED', request.method, '   ', '|' + hostname);
 					} else if (request.method == "POST") {
@@ -121,6 +132,7 @@ let proxy_setup = (temp_port, client) => {
 					});
 					server_socket.on('connect', () => {
 						db.collection('logs').insertOne({
+							Status: "ALLOWED",
 							Method: request.method,
 							Hostname: hostname
 						});
