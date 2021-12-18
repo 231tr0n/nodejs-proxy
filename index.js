@@ -158,14 +158,12 @@ let proxy_setup = (temp_port, client) => {
 						client_socket.pipe(server_socket, {
 							end: true
 						});
-						return;
 					});
 				}
 			});
 		} else {
 			client_socket.end();
 			client_socket.destroy();
-			return;
 		}
 	});
 
