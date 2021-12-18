@@ -77,7 +77,6 @@ let proxy_setup = (temp_port, client) => {
 	const proxy_server_listener = proxy_server.listen(temp_port, (error) => {
 		if (error) {
 			console.log('        ERROR   |proxy server listener error!');
-			return;
 		} else {
 			const listener_local_ip = proxy_server_listener.address();
 			console.log('Nodejs Proxy Server running on port: ' + listener_local_ip.port);
