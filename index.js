@@ -14,15 +14,7 @@ let proxy_setup = (temp_port, client) => {
 						Method: client_request.method,
 						Hostname: client_http_url.hostname
 					});
-					if (client_request.method == "GET") {
-						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
-					} else if (client_request.method == "POST") {
-						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
-					} else if (client_request.method == "HEAD") {
-						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
-					} else {
-						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
-					}
+					console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
 					client_request.destroy();
 					client_response.end();
 					client_response.destroy();
