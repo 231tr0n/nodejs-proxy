@@ -42,11 +42,11 @@ let proxy_setup = (temp_port, client) => {
 						console.log('ALLOWED', client_request.method, '  ', '|' + client_http_url.hostname);
 					}
 					var options = {
-						hostname : client_http_url.hostname,
-						port : 80,
-						path : client_http_url.pathname,
-						method : client_request.method,
-						headers : client_request.headers
+						hostname: client_http_url.hostname,
+						port: 80,
+						path: client_http_url.pathname,
+						method: client_request.method,
+						headers: client_request.headers
 					}
 					var server_request = http.request(options, (server_response) => {
 						client_response.writeHead(server_response.statusCode, server_response.headers);
