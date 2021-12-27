@@ -15,13 +15,13 @@ let proxy_setup = (temp_port, client) => {
 						Hostname: client_http_url.hostname
 					});
 					if (client_request.method == "GET") {
-						console.log('BLOCKED', client_request.method, '   ', '|' + client_http_url.hostname);
+						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
 					} else if (client_request.method == "POST") {
-						console.log('BLOCKED', client_request.method, '  ', '|' + client_http_url.hostname);
+						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
 					} else if (client_request.method == "HEAD") {
-						console.log('BLOCKED', client_request.method, '  ', '|' + client_http_url.hostname);
+						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
 					} else {
-						console.log('BLOCKED', client_request.method, '  ', '|' + client_http_url.hostname);
+						console.log('BLOCKED', client_request.method, '|' + client_http_url.hostname);
 					}
 					client_request.destroy();
 					client_response.end();
@@ -32,15 +32,7 @@ let proxy_setup = (temp_port, client) => {
 						Method: client_request.method,
 						Hostname: client_http_url.hostname
 					});
-					if (client_request.method == "GET") {
-						console.log('ALLOWED', client_request.method, '   ', '|' + client_http_url.hostname);
-					} else if (client_request.method == "POST") {
-						console.log('ALLOWED', client_request.method, '  ', '|' + client_http_url.hostname);
-					} else if (client_request.method == "HEAD") {
-						console.log('ALLOWED', client_request.method, '  ', '|' + client_http_url.hostname);
-					} else {
-						console.log('ALLOWED', client_request.method, '  ', '|' + client_http_url.hostname);
-					}
+					console.log('ALLOWED', client_request.method, '|' + client_http_url.hostname);
 					var options = {
 						hostname: client_http_url.hostname,
 						port: 80,
@@ -51,7 +43,7 @@ let proxy_setup = (temp_port, client) => {
 					var server_request = http.request(options, (server_response) => {
 						client_response.writeHead(server_response.statusCode, server_response.headers);
 						server_response.on('error', (error) => {
-							console.log('        ERROR   |http server response error!', server_request.remoteAddress, ':', server_request.remotePort);
+							console.log('        ERROR |http server response error!', server_request.remoteAddress, ':', server_request.remotePort);
 						});
 						server_response.pipe(client_response, {
 							end : true
@@ -61,13 +53,13 @@ let proxy_setup = (temp_port, client) => {
 						});
 					});
 					server_request.on('error', (error) => {
-						console.log('        ERROR   |http server request error!', server_request.remoteAddress, ':', server_request.remotePort);
+						console.log('        ERROR |http server request error!', server_request.remoteAddress, ':', server_request.remotePort);
 					});
 					client_request.on('error', (error) => {
-						console.log('        ERROR   |http client request error!', client_request.remoteAddress, ':', client_request.remotePort);
+						console.log('        ERROR |http client request error!', client_request.remoteAddress, ':', client_request.remotePort);
 					});
 					client_response.on('error', (error) => {
-						console.log('        ERROR   |http client response error!', client_request.remoteAddress, ':', client_request.remotePort);
+						console.log('        ERROR |http client response error!', client_request.remoteAddress, ':', client_request.remotePort);
 					});
 				}
 			});
@@ -76,7 +68,7 @@ let proxy_setup = (temp_port, client) => {
 
 	const proxy_server_listener = proxy_server.listen(temp_port, (error) => {
 		if (error) {
-			console.log('        ERROR   |proxy server listener error!');
+			console.log('        ERROR |proxy server listener error!');
 		} else {
 			const listener_local_ip = proxy_server_listener.address();
 			console.log('Nodejs Proxy Server running on port: ' + listener_local_ip.port);
@@ -96,17 +88,7 @@ let proxy_setup = (temp_port, client) => {
 						Method: request.method,
 						Hostname: hostname
 					});
-					if (request.method == "GET") {
-						console.log('BLOCKED', request.method, '   ', '|' + hostname);
-					} else if (request.method == "POST") {
-						console.log('BLOCKED', request.method, '  ', '|' + hostname);
-					} else if (request.method == "CONNECT") {
-						console.log('BLOCKED', request.method, '|' + hostname);
-					} else if (request.method == "HEAD") {
-						console.log('BLOCKED', request.method, '|' + hostname);
-					} else {
-						console.log('BLOCKED', request.method, '|' + hostname);
-					}
+					console.log('BLOCKED', request.method, '|' + hostname);
 					client_socket.end();
 					client_socket.destroy();
 				} else {
@@ -135,17 +117,7 @@ let proxy_setup = (temp_port, client) => {
 							Method: request.method,
 							Hostname: hostname
 						});
-						if (request.method == "GET") {
-							console.log('ALLOWED', request.method, '   ', '|' + hostname);
-						} else if (request.method == "POST") {
-							console.log('ALLOWED', request.method, '  ', '|' + hostname);
-						} else if (request.method == "CONNECT") {
-							console.log('ALLOWED', request.method, '|' + hostname);
-						} else if (request.method == "HEAD") {
-							console.log('ALLOWED', request.method, '|' + hostname);
-						} else {
-							console.log('ALLOWED', request.method, '|' + hostname);
-						}
+						console.log('ALLOWED', request.method, '|' + hostname);
 						client_socket.write([
 							'HTTP/1.1 200 Connection Established',
 							'Proxy-agent: zeoxy'
