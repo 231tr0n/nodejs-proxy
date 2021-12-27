@@ -38,10 +38,10 @@ let proxy_setup = (temp_port, client) => {
 							console.log('        ERROR |http server response error!', server_request.remoteAddress, ':', server_request.remotePort);
 						});
 						server_response.pipe(client_response, {
-							end : true
+							end: true
 						});
 						client_request.pipe(server_request, {
-							end : true
+							end: true
 						});
 					});
 					server_request.on('error', (error) => {
@@ -65,7 +65,7 @@ let proxy_setup = (temp_port, client) => {
 			const listener_local_ip = proxy_server_listener.address();
 			console.log('Nodejs Proxy Server running on port: ' + listener_local_ip.port);
 			console.log('================================================');
-			console.log('STATUS ', 'METHOD ', ' URL');
+			console.log('STATUS', 'METHOD', '|URL');
 			console.log('================================================');
 		}
 	});
