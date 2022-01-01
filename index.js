@@ -76,7 +76,7 @@ let proxy_setup = (temp_port, client) => {
 			db.collection('blocked_websites').find({Hostname: hostname}).toArray((error, results) => {
 				if (results.length > 0) {
 					db.collection('logs').insertOne({
-						Status: "BLOCKED",
+						Status: 'BLOCKED',
 						Method: request.method,
 						Hostname: hostname
 					});
@@ -105,7 +105,7 @@ let proxy_setup = (temp_port, client) => {
 					});
 					server_socket.on('connect', () => {
 						db.collection('logs').insertOne({
-							Status: "ALLOWED",
+							Status: 'ALLOWED',
 							Method: request.method,
 							Hostname: hostname
 						});
