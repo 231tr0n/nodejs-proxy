@@ -1,0 +1,57 @@
+{
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "globals": {
+    "backup_file_name": "readonly",
+    "status_update_character": "readonly",
+    "leave_character": "readonly",
+    "no_status_update_character": "readonly",
+    "arrow_character": "readonly",
+    "value_differentiating_character": "readonly",
+    "repair_character": "readonly",
+    "created_character": "readonly",
+    "done_character": "readonly",
+    "fail_character": "readonly",
+    "attended_character": "readonly",
+    "not_attended_character": "readonly",
+    "server_id": "readonly",
+    "status_updates_channels": "readonly",
+    "logs_channels": "readonly",
+    "admin_commands_channels": "readonly",
+    "bot": "readonly",
+    "bot_command_initiator": "readonly"
+  },
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "import/extensions": ["off"],
+    "no-process-exit": ["off"],
+    "indent": ["error", 2],
+    "no-console": ["off"],
+    "no-tabs": ["off"],
+    "space-unary-ops": ["off"],
+    "no-plusplus": ["off"],
+    "camelcase": ["off"],
+    "eqeqeq": ["error"],
+    "max-len": ["off"],
+    "no-underscore-dangle": ["off"],
+    "func-names": ["off"],
+    "new-cap": ["off"],
+    "no-unused-vars": ["warn"],
+    "radix": ["off"],
+    "no-restricted-syntax": ["off"],
+    "no-loss-of-precision": ["warn"],
+    "guard-for-in": ["off"],
+    "prefer-destructuring": ["off"],
+    "no-await-in-loop": ["off"],
+    "no-restricted-globals": ["off"],
+    "no-alert": ["off"],
+    "no-continue": ["off"]
+  }
+}
