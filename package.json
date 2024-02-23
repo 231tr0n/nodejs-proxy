@@ -2,7 +2,7 @@
   "name": "nodejs-proxy",
   "version": "1.0.0",
   "description": "A Basic nodejs proxy implementation which will be running in port 8080. If you want the port to be changed just change the port variable in the code.",
-  "main": "index.cjs",
+  "main": "index.js",
   "scripts": {
     "devstart": "npx nodemon .",
     "start": "node .",
